@@ -1,5 +1,4 @@
-import sys
-from days import testground
+from days import stopwatch
 
 if __name__ == '__main__':
-    testground.run()
+    stopwatch.run()
