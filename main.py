@@ -1,5 +1,4 @@
-from string import ascii_lowercase
-import re
+import mc_games_reader
 
 text = """
 One really nice feature of Python is polymorphism: using the same operation
@@ -17,7 +16,4 @@ keep enjoying our bites!
 """
 
 if __name__ == '__main__':
-    results = []
-    print(text.split('\n'))
-
-    print(results)
+    mc_games_reader.run()

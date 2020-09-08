@@ -1,4 +1,4 @@
-from day5 import get_movies_by_director, get_average_scores, _calc_mean
+# from day5 import get_movies_by_director, get_average_scores, _calc_mean
 
 
 def test():
