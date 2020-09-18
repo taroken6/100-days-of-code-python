@@ -9,6 +9,25 @@ class Game():
 
     def get_player_name(self, name):
         self.player = Player(input("Please enter your name: "))
+        self.rolls = None
+
+    def loop(self, p1, p2, rolls):
+        self.rolls = self.build_three_rolls()
+        cnt = 1
+        while cnt < 3:
+            p2_roll = None
+            p1_roll = None
+            # Display throws
+            # Display winner
+            cnt += 1
+        # Compute winner
+
+    def build_three_rolls(self):
+        Rolls = namedtuple('Rolls', ['name', 'beat', 'lose'])
+        d = {'rock': Rolls(name='rock', beat='scissor', lose='paper'),
+             'paper': Rolls(name='paper', beat='rock', lose='scissor'),
+             'scissor': Rolls(name='scissor', beat='paper', lose='scissor')}
+        return d
 
     def print_header(self):
         print(f'Welcome to Rock, Paper, Scissors!\n{self.line}')
@@ -27,6 +46,8 @@ class Game():
             count += 1
 
         # Compute who won
+    def get_player_name(self):
+        return input("Please input your name: ")
 
 
 class Player():
