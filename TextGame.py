@@ -1,4 +1,4 @@
-from collections import namedtuple
+import random
 
 
 class Game():
@@ -6,66 +6,74 @@ class Game():
 
     def __init__(self):
         self.player = None
-
-    def get_player_name(self, name):
-        self.player = Player(input("Please enter your name: "))
         self.rolls = None
 
-    def loop(self, p1, p2, rolls):
+    def loop(self, p1, p2):
         self.rolls = self.build_three_rolls()
         cnt = 1
-        while cnt < 3:
-            p2_roll = None
-            p1_roll = None
-            # Display throws
-            # Display winner
+        while cnt < 4:
+            p2.roll = self.random_roll()
+            p1.roll = self.get_roll(input("Select a roll: "))
+            print(f'{p1.name}-{p1.roll.name} vs. {p2.name}-{p2.roll.name}')
+            winner = self.get_winner(p1, p2)
+            if winner == p1:
+                p1.score += 1
+                print(f'{p1.name} wins this round!')
+            elif winner == p2:
+                p2.score += 1
+                print(f'{p2.name} wins this round!')
+            else:
+                print('Draw round!')
+            print()
             cnt += 1
-        # Compute winner
+        if p1.score > p2.score:
+            print(f'{p1.name} wins the match!')
+        elif p1.score < p2.score:
+            print(f'{p2.name} wins the match!')
+        else:
+            print("Match draw!")
+
+    def get_winner(self, p1, p2):
+        if p1.roll.name == p2.roll.lose:
+            return p1
+        elif p2.roll.name == p1.roll.lose:
+            return p2
+        else:
+            return None
 
     def build_three_rolls(self):
-        Rolls = namedtuple('Rolls', ['name', 'beat', 'lose'])
-        d = {'rock': Rolls(name='rock', beat='scissor', lose='paper'),
-             'paper': Rolls(name='paper', beat='rock', lose='scissor'),
-             'scissor': Rolls(name='scissor', beat='paper', lose='scissor')}
-        return d
+        return {'rock': Roll(name='rock', beat='scissor', lose='paper'),
+                'paper': Roll(name='paper', beat='rock', lose='scissor'),
+                'scissor': Roll(name='scissor', beat='paper', lose='scissor')}
+
+    def random_roll(self):
+        return random.choice(list(self.rolls.values()))
+
+    def get_roll(self, name):
+        while True:
+            if name in self.rolls:
+                return self.rolls[name]
+            elif name == 'random':
+                return self.random_roll()
+            else:
+                name = input("Please enter a valid choice: ")
 
     def print_header(self):
         print(f'Welcome to Rock, Paper, Scissors!\n{self.line}')
 
-    def game_loop(self, p1, p2, rolls):
-        count = 1
-        while count < 3:
-            p2_roll = None # Get random roll
-            p1_roll = None # Have player choose roll
-
-            outcome = p1_roll.can_defeat(p2_roll)
-
-            # Display throws
-            # Display winner for this round
-
-            count += 1
-
-        # Compute who won
     def get_player_name(self):
-        return input("Please input your name: ")
+        self.player = Player(input("Please enter your name: "))
 
 
 class Player():
     def __init__(self, name):
         self.name = name
+        self.roll = None
+        self.score = 0
 
 
 class Roll():
-    def __init__(self):
-        roll = namedtuple('Roll', ('win', 'lose'))
-        self.rock = None
-        self.paper = None
-        self.scissor = None
-
-    def build_three_rolls(self):
-        _rock = 'rock'
-        _scissor = 'scissor'
-        _paper = 'paper'
-        self.rock = Roll(_scissor, _paper)
-        self.paper = Roll(_rock, _scissor)
-        self.scissor = Roll(_paper, _rock)
+    def __init__(self, name='', beat='', lose=''):
+        self.name = name
+        self.beat = beat
+        self.lose = lose
