@@ -1,4 +1,4 @@
-import day10
+from TextGame import Game
 
 if __name__ == '__main__':
-    day10.run()
+    game = Game()
