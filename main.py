@@ -1,4 +1,3 @@
-from Day22 import App
+import day23
 
-x = App()
-x.run()
+day23.run()
