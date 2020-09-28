@@ -1,3 +1,4 @@
-import day23
+import Day24
 
-day23.run()
+x = Day24
+x.run()
